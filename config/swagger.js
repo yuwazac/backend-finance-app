@@ -14,10 +14,12 @@ const options = {
       description: "API documentation for Finance App",
     },
     servers: [
-      {
-        url: process.env.NODE_ENV === "development" ? "http://localhost:5000/api" : "https://backend-finance-app-lw0y.onrender.com",
-      },
-    ],
+    {
+      url: process.env.NODE_ENV === "production"
+        ? "https://your-app-name.onrender.com"
+        : "http://localhost:5000",
+    },
+  ],
     components: {
       securitySchemes: {
         bearerAuth: {
