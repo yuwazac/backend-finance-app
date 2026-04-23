@@ -1,6 +1,10 @@
 
 import swaggerJSDoc from "swagger-jsdoc";
 
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 const options = {
   definition: {
     openapi: "3.0.0",
@@ -11,7 +15,7 @@ const options = {
     },
     servers: [
       {
-        url: "http://localhost:5000/api",
+        url: process.env.NODE_ENV === "development" ? "http://localhost:5000/api" : "https://backend-finance-app-lw0y.onrender.com",
       },
     ],
     components: {
