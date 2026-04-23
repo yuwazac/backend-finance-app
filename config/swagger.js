@@ -15,7 +15,7 @@ const options = {
     },
     servers: [
       {
-        url: process.env.NODE_ENV === "development" ? "http://localhost:5000/auth" : "https://backend-finance-app-lw0y.onrender.com",
+        url: process.env.NODE_ENV === "development" ? "http://localhost:5000/api" : "https://backend-finance-app-lw0y.onrender.com",
       },
     ],
     components: {
