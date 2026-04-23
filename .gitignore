@@ -1,0 +1,21 @@
+
+# Node.js dependencies
+node_modules/
+dist/
+build/
+
+# Environment variables
+.env
+logs/
+coverage/
+
+.env.* # if you use .env.development, .env.production, etc.
+
+logs/
+*.log
+
+.vscode/
+.idea/
+.DS_Store
+
+swagger-output.json
