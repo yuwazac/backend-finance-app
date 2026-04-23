@@ -4,9 +4,9 @@ import User from "../models/trackSchema.js";
 
 export const createTrackController = async (req, res, next) =>{
     try {
-        console.log("REQ user:", req.user); // ✅ Check if req.user is populated
+        console.log("REQ user:", req.user); //  Check if req.user is populated
 
-        const userId = req.user.id; // ✅ Use req.user.id to get the authenticated user's ID
+        const userId = req.user.id; // Use req.user.id to get the authenticated user's ID
         const { name, amount, type } = req.body;
 
         // Validate input
@@ -41,7 +41,7 @@ export const createTrackController = async (req, res, next) =>{
 // get all tracks for a user
 export const getTracksController = async (req, res, next) => {
     try {
-        const userId = req.user.id; // ✅ Use req.user.id to get the authenticated user's ID
+        const userId = req.user.id; // Use req.user.id to get the authenticated user's ID
 
         // Find user and return tracks
         const user = await User.findById(userId);

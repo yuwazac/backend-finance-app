@@ -63,7 +63,7 @@ export const createTransaction = async (req, res, next) => {
 // get all transactions for a user
 export const getTransactions = async (req, res, next) => {
     try {
-        const userId = req.user.id; // ✅ Use req.user.id to get the authenticated user's ID
+        const userId = req.user.id; //  Use req.user.id to get the authenticated user's ID
 
         // Find transactions for the user
         const transactions = await Transaction.find({ user: userId }).sort({ date: -1 });
@@ -78,7 +78,7 @@ export const getTransactions = async (req, res, next) => {
 // get a single transaction by ID
 export const getTransactionById = async (req, res, next) => {
     try {
-        const userId = req.user.id; // ✅ Use req.user.id to get the authenticated user's ID
+        const userId = req.user.id; //  Use req.user.id to get the authenticated user's ID
         const transactionId = req.params.id;
 
         // Find transaction by ID and ensure it belongs to the user
@@ -98,7 +98,7 @@ export const getTransactionById = async (req, res, next) => {
 // update a transaction by ID
 export const updateTransaction = async (req, res, next) => {
     try {
-        const userId = req.user.id; // ✅ Use req.user.id to get the authenticated user's ID
+        const userId = req.user.id; //  Use req.user.id to get the authenticated user's ID
         const transactionId = req.params.id;
         const { title, amount, type, category, description } = req.body;
 

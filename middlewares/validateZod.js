@@ -13,6 +13,6 @@ export const validate = (schema) => (req, res, next) =>{
         })),
         });
     }
-    req.body = validationResult.data; // ✅ Use the validated data
+    req.body = validationResult.data; //  Use the validated data
     next();
 };

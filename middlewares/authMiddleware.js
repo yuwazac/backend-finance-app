@@ -18,7 +18,7 @@ export const authMiddleware = async (req, res, next) => {
 
     console.log("DECODED:", decoded);
 
-    req.user = decoded; // ✅ VERY IMPORTANT
+    req.user = decoded; //  VERY IMPORTANT
 
     next();
   } catch (error) {
