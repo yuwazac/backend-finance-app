@@ -81,7 +81,7 @@ authRouter.post('/login', loginUser);
  */
 
 //get users route
-authRouter.get('/users', getUsers);
+authRouter.get('/', getUsers);
 
 /** 
  * @swagger

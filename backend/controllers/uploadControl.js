@@ -2,17 +2,29 @@ import User from "../models/trackSchema.js";
 
 export const uploadProfilePicture = async (req, res) => {
   try {
-    if (!req.file || !req.file.path) {
+    console.log("Upload request received");
+    console.log("req.file:", req.file);
+    console.log("req.body:", req.body);
+    console.log("req.user:", req.user);
+
+    if (!req.file) {
+      console.log("No file uploaded - req.file is undefined");
       return res.status(400).json({ message: "No file uploaded" });
     }
 
-    const userId = req.user.id; //  Use req.user.id to get the authenticated user's ID
-    const imagePath = req.file.path; //  Get the URL of the uploaded image from Cloudinary
+    if (!req.file.path) {
+      console.log("File uploaded but no path - Cloudinary upload failed");
+      console.log("File details:", req.file);
+      return res.status(400).json({ message: "File upload failed - no path returned" });
+    }
 
-    // Update user's profile picture URL in the database
+    const userId = req.user.id; //  Use req.user.id to get the authenticated user's ID
+    const imagePath = req.file.path; //  Get the local file path
+
+    // For now, just store the local path - later we'll upload to Cloudinary
     const user = await User.findByIdAndUpdate(
      req.user.id,
-      { profilePicture: imagePath }, // Save the image URL to the user's profile
+      { profile: `/uploads/${req.file.filename}` }, // Store relative path for now
       { new: true }
     );
 

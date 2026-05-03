@@ -25,9 +25,17 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json());
 app.use(helmet());
 
+// Serve static files from uploads directory
+app.use('/uploads', express.static('uploads'));
+
+//http://localhost:5173/
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: [
+      'http://localhost:5173',
+      'http://localhost:3000',
+      'http://localhost:5000',
+    ], 
     credentials: true,
   })
 );
@@ -36,30 +44,30 @@ app.use(
 app.use(Limiter);
 
 //  Swagger docs
-app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 //  ROOT ROUTE (this fixes your issue)
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
   res.send('API is running 🚀');
 });
 
 //  Routes
-app.use('/auth', authRouter);
-app.use('/tracker', trackRouter);
-app.use('/transactions', transactionRouter);
-app.use('/profile', profileRouter);
-app.use('/summary', summaryRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/tracker', trackRouter);
+app.use('/api/transactions', transactionRouter);
+app.use('/api/profile', profileRouter);
+app.use('/api/summary', summaryRouter);
 
 //  MongoDB connection
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('Connected to MongoDB ✅'))
   .catch(err => console.error(err));
 
-// ❗ ALWAYS LAST
+//  Error handling middleware
 app.use(notFound);
 app.use(errorHandler);
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on port http://localhost:${PORT}`);
 });

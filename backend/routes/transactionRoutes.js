@@ -140,6 +140,6 @@ transactionRouter.put('/:id', authMiddleware, validate(transactionSchema), updat
  *       204:
  *         description: Transaction deleted successfully
  */
-transactionRouter.delete('/:id', authMiddleware, validate(transactionSchema), deleteTransaction);
+transactionRouter.delete('/:id', authMiddleware, deleteTransaction);
 
 export default transactionRouter;
