@@ -19,3 +19,12 @@ logs/
 .DS_Store
 
 swagger-output.json
+
+.vercel
+
+frontend/node_modules/
+backend/uploads/
+package-lock.json
+yarn.lock
+.env.local
+.env.*.local

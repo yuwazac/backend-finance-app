@@ -4,6 +4,8 @@ import helmet from 'helmet';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import swaggerUi from 'swagger-ui-express';
+import Path from 'path';
+import { fileURLToPath } from 'url';
 
 import authRouter from './routes/authRoutes.js';
 import trackRouter from './routes/trackRoutes.js';
@@ -62,6 +64,27 @@ app.use('/api/summary', summaryRouter);
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('Connected to MongoDB ✅'))
   .catch(err => console.error(err));
+
+
+  // server frontend in production
+
+  if (process.env.NODE_ENV === 'production') {
+    const __dirname =  Path.dirname(fileURLToPath(import.meta.url));
+    app.use(express.static(Path.json(__dirname, '../frontend/dist')));
+    app.get('*', (req, res) => {
+      res.sendFile(Path.json(__dirname, "..", "frontend", "dist", "index.html"));
+    });
+  }
+// if (process.env.NODE_ENV === 'production') {
+//   app.use(express.static('client/build'));
+//   app.get('*', (req, res) => {
+//     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+//   });
+// }
+
+
+
+
 
 //  Error handling middleware
 app.use(notFound);
