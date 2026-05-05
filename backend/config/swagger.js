@@ -3,7 +3,7 @@ import swaggerJSDoc from "swagger-jsdoc";
 
 import dotenv from 'dotenv';
 
-dotenv.config();
+dotenv.config({ quiet: true });
 
 const options = {
   definition: {

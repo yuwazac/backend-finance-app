@@ -32,20 +32,8 @@ export const Profile = () => {
   // Upload profile picture mutation
   const uploadMutation = useMutation({
     mutationFn: async (formData) => {
-      const response = await fetch('http://localhost:5000/api/profile', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-        body: formData,
-      })
-
-      if (!response.ok) {
-        const errorData = await response.json()
-        throw new Error(errorData.message || 'Upload failed')
-      }
-
-      return response.json()
+      const response = await api.upload('/profile', formData)
+      return response.data
     },
     onSuccess: (data) => {
       setError(null)

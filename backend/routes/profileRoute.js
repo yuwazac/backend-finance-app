@@ -7,15 +7,12 @@ const profileRouter = express.Router();
 
 
 
-profileRouter.post('/profile', authMiddleware, upload.single('image'), (req, res, next) => {
-  console.log("Profile upload route hit");
-  next();
-}, uploadProfilePicture);
+profileRouter.post('/', authMiddleware, upload.single('image'), uploadProfilePicture);
 
 
 profileRouter.post('/upload', authMiddleware, upload.single('image'), uploadProfilePicture);
 
 
-profileRouter.get('/profile', authMiddleware, getProfilePicture);
+profileRouter.get('/', authMiddleware, getProfilePicture);
 
 export default profileRouter;

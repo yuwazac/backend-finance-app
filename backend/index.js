@@ -18,12 +18,13 @@ import swaggerSpec from './config/swagger.js';
 import Limiter from './middlewares/rateLimiter.js';
 
 //  Load env FIRST
-dotenv.config();
+dotenv.config({ quiet: true });
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Core middleware
+app.set('trust proxy', 1);
 app.use(express.json());
 app.use(helmet());
 
@@ -68,11 +69,13 @@ mongoose.connect(process.env.MONGO_URI)
 
   // server frontend in production
 
-  if (process.env.NODE_ENV === 'production') {
-    const __dirname =  Path.dirname(fileURLToPath(import.meta.url));
-    app.use(express.static(Path.json(__dirname, '../frontend/dist')));
-    app.get('*', (req, res) => {
-      res.sendFile(Path.json(__dirname, "..", "frontend", "dist", "index.html"));
+if (process.env.NODE_ENV === 'production') {
+    const __dirname = Path.dirname(fileURLToPath(import.meta.url));
+    const frontendDistPath = Path.join(__dirname, '../frontend/dist');
+
+    app.use(express.static(frontendDistPath));
+    app.get(/^\/(?!api).*/, (req, res) => {
+      res.sendFile(Path.join(frontendDistPath, 'index.html'));
     });
   }
 // if (process.env.NODE_ENV === 'production') {
@@ -90,7 +93,10 @@ mongoose.connect(process.env.MONGO_URI)
 app.use(notFound);
 app.use(errorHandler);
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`Server is running on port http://localhost:${PORT}`);
-});
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`Server is running on port http://localhost:${PORT}`);
+  });
+}
+
+export default app;

@@ -5,7 +5,7 @@ import { getMonthlySummary } from '../controllers/monthlySumarry.js';
 
 const summaryRouter = express.Router();
 
-summaryRouter.get('/summary', authMiddleware, getMonthlySummary);
+summaryRouter.get('/', authMiddleware, getMonthlySummary);
 
 export default summaryRouter;
 

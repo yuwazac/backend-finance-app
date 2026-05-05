@@ -1,4 +1,6 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5000/api'
+const defaultApiBaseUrl = import.meta.env.PROD ? '/api' : 'http://localhost:5000/api'
+
+export const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || defaultApiBaseUrl).replace(/\/$/, '')
 
 const getAuthHeaders = () => {
     const token = localStorage.getItem('token')
@@ -7,9 +9,11 @@ const getAuthHeaders = () => {
 }
 
 const request = async (path, options = {}) => {
+    const isFormData = typeof FormData !== 'undefined' && options.body instanceof FormData
+
     const response = await fetch(`${API_BASE_URL}${path}`, {
         headers: {
-            'Content-Type': 'application/json',
+            ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
             ...getAuthHeaders(),
             ...options.headers,
         },
@@ -39,6 +43,11 @@ const api = {
     post: (path, body, options) => request(path, {
         method: 'POST',
         body: JSON.stringify(body),
+        ...options,
+    }),
+    upload: (path, body, options) => request(path, {
+        method: 'POST',
+        body,
         ...options,
     }),
     put: (path, body, options) => request(path, {
